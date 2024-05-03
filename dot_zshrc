@@ -1,5 +1,6 @@
 
 ##-- EXPORTS --##
+export ZSH=/home/ernov/.oh-my-zsh
 
 export GPG_TTY=$(tty)
 
@@ -19,11 +20,16 @@ else
     export EDITOR='nvim'
 fi
 
+export MANGOHUD=1
+
 # Composer
 export PATH=~/.composer/vendor/bin:$PATH
 
 # Cargo
 export PATH=$HOME/.cargo/bin:$PATH
+
+# Pip packages
+export PATH=$HOME/.local/bin:$PATH
 
 ##-- ALIASES --##
 
@@ -48,7 +54,23 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-source /home/ernov/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /home/ernov/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+source "$HOME/.rye/env"
+
+plugins=( 
+    git,
+    zsh-autosuggestions,
+    zsh-autocomplete
+)
 
 # Starship
 eval "$(starship init zsh)"
+
+# pnpm
+export PNPM_HOME="/home/ernov/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
